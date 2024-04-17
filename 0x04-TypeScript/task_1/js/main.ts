@@ -18,3 +18,19 @@ const teacher3: Teacher = {
 };
 
 console.log(teacher3);
+
+// Extend the Teacher interface to create Directors interface
+interface Directors extends Teacher {
+  numberOfReports: number;
+}
+
+// Create an instance of Directors
+const director1: Directors = {
+  firstName: 'John',
+  lastName: 'Doe',
+  fullTimeEmployee: true,
+  location: 'London',
+  numberOfReports: 17
+};
+
+console.log(director1);
