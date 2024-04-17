@@ -1,7 +1,5 @@
-import { Subjects } from './Subject';
-
-export namespace Subjects {
-    export class Cpp extends Subject {
+namespace Subjects {
+    export class Cpp extends Subjects.Subject {
         getRequirements(): string {
             return "Here is the list of requirements for Cpp";
         }
