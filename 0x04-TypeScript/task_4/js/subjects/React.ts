@@ -1,7 +1,5 @@
-import { Subjects } from './Subject';
-
-export namespace Subjects {
-    export class React extends Subject {
+namespace Subjects {
+    export class React extends Subjects.Subject {
         getRequirements(): string {
             return "Here is the list of requirements for React";
         }
