@@ -67,3 +67,19 @@ function executeWork(employee: Director | Teacher): string {
     return employee.workTeacherTasks();
   }
 }
+
+// Define the string literal type for subjects
+type Subjects = 'Math' | 'History';
+
+// Function to return a string based on the subject
+function teachClass(todayClass: Subjects): string {
+  if (todayClass === 'Math') {
+    return 'Teaching Math';
+  } else if (todayClass === 'History') {
+    return 'Teaching History';
+  }
+}
+
+// Test the function
+console.log(teachClass('Math'));    // Output: Teaching Math
+console.log(teachClass('History')); // Output: Teaching History
