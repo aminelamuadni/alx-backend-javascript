@@ -8,29 +8,17 @@ interface Teacher {
   [propName: string]: any;  // Allows any other properties
 }
 
-// Example usage of the Teacher interface
-const teacher3: Teacher = {
-  firstName: 'John',
-  lastName: 'Doe',
-  fullTimeEmployee: false,
-  location: 'London',
-  contract: false
-};
-
-console.log(teacher3);
-
 // Extend the Teacher interface to create Directors interface
 interface Directors extends Teacher {
   numberOfReports: number;
 }
 
-// Create an instance of Directors
-const director1: Directors = {
-  firstName: 'John',
-  lastName: 'Doe',
-  fullTimeEmployee: true,
-  location: 'London',
-  numberOfReports: 17
-};
+// Interface for the printTeacher function
+interface PrintTeacherFunction {
+  (firstName: string, lastName: string): string;
+}
 
-console.log(director1);
+// Function that implements the PrintTeacherFunction interface
+const printTeacher: PrintTeacherFunction = (firstName: string, lastName: string): string => {
+  return `${firstName.charAt(0)}. ${lastName}`;
+}
