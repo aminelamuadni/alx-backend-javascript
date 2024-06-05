@@ -3,9 +3,9 @@ const fs = require('fs').promises;
 
 const app = express();
 const port = 1245;
-const dbFilePath = process.argv[2]; // The database file path from the command line argument
+const dbFilePath = process.argv[2]; // Get the database file path from command line arguments
 
-// Function to read and process the CSV file
+// Async function to read and process the CSV data
 async function countStudents(path) {
   try {
     const data = await fs.readFile(path, 'utf8');
@@ -19,36 +19,35 @@ async function countStudents(path) {
       studentCounts[field].students.push(firstname);
     });
 
-    let report = `Number of students: ${lines.length}\n`;
+    let response = `Number of students: ${lines.length}\n`;
     Object.entries(studentCounts).forEach(([field, info]) => {
-      report += `Number of students in ${field}: ${info.count}. List: ${info.students.join(', ')}\n`;
+      response += `Number of students in ${field}: ${info.count}. List: ${info.students.join(', ')}\n`;
     });
 
-    return report;
+    return response;
   } catch (error) {
     throw new Error('Cannot load the database');
   }
 }
 
-// Route to handle the root "/"
+// Route for "/"
 app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
 
-// Route to handle "/students"
+// Route for "/students"
 app.get('/students', async (req, res) => {
   try {
     const report = await countStudents(dbFilePath);
     res.send(`This is the list of our students\n${report}`);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send(error.message); // Send a 500 Internal Server Error if something goes wrong
   }
 });
 
-// Server listens on port 1245
+// Listen on port 1245
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
 });
 
-// Export the app for testing and potential integration in other modules
-module.exports = app;
+module.exports = app; // Export the app for testing and modular use
