@@ -1,13 +1,11 @@
 const http = require('http');
 const fs = require('fs').promises;
 
-// Function to read and process the student data from the CSV file
+// Function to read and process students from a CSV file asynchronously
 function countStudents(path) {
   return fs.readFile(path, 'utf8')
     .then((data) => {
       const lines = data.trim().split('\n').filter((line) => line && !line.startsWith('firstname'));
-      if (lines.length === 0) throw new Error('No valid entries found.');
-
       const studentCounts = {};
       lines.forEach((line) => {
         const [firstname, , , field] = line.split(',');
@@ -27,19 +25,18 @@ function countStudents(path) {
     });
 }
 
-// Create the HTTP server
 const app = http.createServer((req, res) => {
   if (req.url === '/') {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.write('This is the list of our students\n');
     countStudents(process.argv[2])
-      .then((data) => {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end(`This is the list of our students\n${data}`);
+      .then((report) => {
+        res.end(report);
       })
       .catch((error) => {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
         res.end(error.message);
       });
   } else {
@@ -48,9 +45,8 @@ const app = http.createServer((req, res) => {
   }
 });
 
-// Listen on port 1245
 app.listen(1245, () => {
-  console.log('Server listening on http://localhost:1245');
+  console.log('Server is running on http://localhost:1245');
 });
 
-module.exports = app;
+module.exports = app; // Export the app for possible testing or modular use
