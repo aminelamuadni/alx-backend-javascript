@@ -3,7 +3,6 @@ const fs = require('fs').promises;
 
 const app = express();
 const port = 1245;
-const dbFilePath = process.argv[2]; // Get the database file path from command line arguments
 
 // Async function to read and process the CSV data
 async function countStudents(path) {
@@ -37,15 +36,15 @@ app.get('/', (req, res) => {
 
 // Route for "/students"
 app.get('/students', async (req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.write('This is the list of our students\n');
-    countStudents(process.argv[2])
-      .then((report) => {
-        res.end(report);
-      })
-      .catch((error) => {
-        res.end(error.message);
-      });
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.write('This is the list of our students\n');
+  countStudents(process.argv[2])
+    .then((report) => {
+      res.end(report);
+    })
+    .catch((error) => {
+      res.end(error.message);
+    });
 });
 
 // Listen on port 1245
