@@ -37,12 +37,15 @@ app.get('/', (req, res) => {
 
 // Route for "/students"
 app.get('/students', async (req, res) => {
-  try {
-    const report = await countStudents(dbFilePath);
-    res.send(`This is the list of our students\n${report}`);
-  } catch (error) {
-    res.status(500).send(error.message); // Send a 500 Internal Server Error if something goes wrong
-  }
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.write('This is the list of our students\n');
+    countStudents(process.argv[2])
+      .then((report) => {
+        res.end(report);
+      })
+      .catch((error) => {
+        res.end(error.message);
+      });
 });
 
 // Listen on port 1245
