@@ -9,7 +9,7 @@ process.stdin.on('readable', () => {
   const input = process.stdin.read();
   if (input !== null) { // Check if there is data to process
     // Output the name, trimming any extra newline character that might be included
-    process.stdout.write(`Your name is: ${chunk}`);
+    process.stdout.write(`Your name is: ${input}`);
   }
 });
 
