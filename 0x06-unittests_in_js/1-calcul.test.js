@@ -60,7 +60,7 @@ describe('calculateNumber', () => {
     });
   });
 
-  describe('error Handling', () => {
+  describe('Error Handling', () => {
     it('should throw an error for an invalid operation type', () => {
       assert.throws(() => calculateNumber('MULTIPLY', 4, 2), {
         name: 'Error',
