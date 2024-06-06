@@ -22,3 +22,4 @@ const readDatabase = async (path) => {
 };
 
 export default readDatabase;
+module.exports = readDatabase;
