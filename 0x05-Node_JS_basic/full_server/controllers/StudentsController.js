@@ -1,5 +1,7 @@
 import readDatabase from '../utils';
 
+const VALID_MAJORS = ['CS', 'SWE'];
+
 class StudentsController {
   static async getAllStudents(req, res) {
     try {
@@ -8,26 +10,33 @@ class StudentsController {
       Object.keys(data).sort().forEach((field) => {
         response.push(`Number of students in ${field}: ${data[field].length}. List: ${data[field].join(', ')}`);
       });
-      return res.status(200).send(response.join('\n')); // Ensure to use return here
+      res.status(200).send(response.join('\n'));
     } catch (error) {
-      return res.status(500).send('Cannot load the database'); // Ensure to use return here
+      res.status(500).send('Cannot load the database');
     }
   }
 
   static async getAllStudentsByMajor(req, res) {
-    try {
-      const { major } = req.params;
-      if (!['CS', 'SWE'].includes(major)) {
-        return res.status(500).send('Major parameter must be CS or SWE'); // Ensured return is used here
-      }
+    const { major } = req.params;
 
-      const data = await readDatabase(process.argv[2]);
-      if (data[major]) {
-        return res.status(200).send(`List: ${data[major].join(', ')}`); // Ensured return is used here
+    // Check if the major is valid
+    if (!VALID_MAJORS.includes(major)) {
+      return res.status(500).send('Major parameter must be CS or SWE');
+    }
+
+    try {
+      const studentGroups = await readDatabase(process.argv[2]);
+
+      // Check if there are any students in the given major
+      if (studentGroups[major] && studentGroups[major].length > 0) {
+        // Return a list of students if found
+        const studentsList = studentGroups[major].map((student) => student.firstname).join(', ');
+        return res.status(200).send(`List: ${studentsList}`);
       }
-      return res.status(404).send('Major not found'); // Ensured return is used here
+      // If no students are found for the major, return an empty 'List: '
+      return res.status(200).send('List: ');
     } catch (error) {
-      return res.status(500).send('Cannot load the database'); // Ensured return is used here
+      return res.status(500).send('Cannot load the database');
     }
   }
 }
