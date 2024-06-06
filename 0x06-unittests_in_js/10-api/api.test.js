@@ -29,31 +29,30 @@ describe('aPI integration tests', () => {
 
   describe('/available_payments endpoint', () => {
     it('should return correct payment methods', () => new Promise((done) => {
-      chai.request(server)
-        .get('/available_payments')
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body).to.deep.equal({
-            payment_methods: {
-              credit_cards: true,
-              paypal: false,
-            },
-          });
-          done();
+      request.get('http://localhost:7865/available_payments', (_err, res, body) => {
+        expect(res.statusCode).to.equal(200);
+        expect(JSON.parse(body)).to.deep.equal({
+          payment_methods: {
+            credit_cards: true,
+            paypal: false,
+          },
         });
+        done();
+      });
     }));
   });
 
   describe('/login endpoint', () => {
     it('should welcome the user by username', () => new Promise((done) => {
-      chai.request(server)
-        .post('/login')
-        .send({ userName: 'Betty' })
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.text).to.equal('Welcome Betty');
-          done();
-        });
+      request.post({
+        url: 'http://localhost:7865/login',
+        json: true,
+        body: { userName: 'Betty' },
+      }, (_err, res, body) => {
+        expect(res.statusCode).to.equal(200);
+        expect(body).to.equal('Welcome Betty');
+        done();
+      });
     }));
   });
 });
