@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const calculateNumber = require('./2-calcul_chai');
 
 describe('calculateNumber', () => {
-  describe('sUM', () => {
+  describe('SUM', () => {
     it('sums two positive integers', () => {
       expect(calculateNumber('SUM', 1, 3)).to.equal(4);
     });
@@ -20,7 +20,7 @@ describe('calculateNumber', () => {
     });
   });
 
-  describe('sUBTRACT', () => {
+  describe('SUBTRACT', () => {
     it('subtracts two positive integers', () => {
       expect(calculateNumber('SUBTRACT', 3, 1)).to.equal(2);
     });
@@ -41,7 +41,7 @@ describe('calculateNumber', () => {
     });
   });
 
-  describe('dIVIDE', () => {
+  describe('DIVIDE', () => {
     it('divides two positive integers', () => {
       expect(calculateNumber('DIVIDE', 4, 2)).to.equal(2);
     });
@@ -59,7 +59,7 @@ describe('calculateNumber', () => {
     });
   });
 
-  describe('error Handling', () => {
+  describe('Error Handling', () => {
     it('should throw an error for an invalid operation type', () => {
       expect(() => calculateNumber('MULTIPLY', 4, 2)).to.throw('Invalid type');
     });
