@@ -1,3 +1,4 @@
+/* eslint-disable jest/prefer-expect-assertions, jest/expect-expect */
 const assert = require('assert');
 const calculateNumber = require('./0-calcul');
 
