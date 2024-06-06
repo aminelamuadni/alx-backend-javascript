@@ -1,10 +1,10 @@
 import express from 'express';
-import routes from './routes';
+import configureRoutes from './routes';
 
 const app = express();
 const port = 1245;
 
-routes(app);
+configureRoutes(app);
 
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
