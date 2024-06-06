@@ -6,8 +6,6 @@ describe('getPaymentTokenFromAPI', () => {
     getPaymentTokenFromAPI(true).then((response) => {
       expect(response).to.deep.equal({ data: 'Successful response from the API' });
       done(); // Signal Mocha that the test is complete
-    }).catch((error) => {
-      done(error); // Pass error to Mocha if the promise is rejected
     });
   }));
 });
