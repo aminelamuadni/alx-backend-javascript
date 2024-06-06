@@ -1,7 +1,7 @@
 const request = require('request');
 const { expect } = require('chai');
 
-describe('aPI integration tests', () => {
+describe('API integration tests', () => {
   it('should return the correct result for the index page', () => new Promise((done) => {
     request.get('http://localhost:7865/', (_err, res, body) => {
       expect(res.statusCode).to.equal(200);
