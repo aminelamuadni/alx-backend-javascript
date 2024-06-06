@@ -22,7 +22,13 @@ app.get('/available_payments', (_, res) => {
 });
 
 app.post('/login', (req, res) => {
-  res.send(`Welcome ${req.body.userName}`);
+  let username = '';
+
+  if (req.body) {
+    username = req.body.userName;
+  }
+
+  res.send(`Welcome ${username}`);
 });
 
 app.listen(7865, () => {
