@@ -1,22 +1,22 @@
 import fs from 'fs/promises';
 
-async function readDatabase(path) {
+const readDatabase = async (path) => {
   try {
-    const data = await fs.readFile(path, 'utf8');
-    const lines = data.split('\n').filter((line) => line && !line.startsWith('firstname'));
+    const data = await fs.readFile(path, 'utf-8');
+    const lines = data.trim().split('\n').filter((line) => line);
     const studentData = {};
-    lines.forEach((line) => {
+
+    lines.slice(1).forEach((line) => {
       const [firstname, , , field] = line.split(',');
-      if (!studentData[field]) {
-        studentData[field] = [];
-      }
+      studentData[field] = studentData[field] || [];
       studentData[field].push(firstname);
     });
+
     return studentData;
   } catch (error) {
     throw new Error('Cannot load the database');
   }
-}
+};
 
 export default readDatabase;
 module.exports = readDatabase;
